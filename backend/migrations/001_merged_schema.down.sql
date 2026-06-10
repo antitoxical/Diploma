@@ -1,0 +1,26 @@
+DROP VIEW IF EXISTS product_rating_stats;
+
+DROP TABLE IF EXISTS search_history;
+DROP TABLE IF EXISTS notifications;
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS favorites;
+DROP TABLE IF EXISTS order_promocodes;
+DROP TABLE IF EXISTS order_status_history;
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS promocodes;
+DROP TABLE IF EXISTS payment_methods;
+DROP TABLE IF EXISTS delivery_methods;
+DROP TABLE IF EXISTS basket_items;
+DROP TABLE IF EXISTS product_tags;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS product_price_tiers;
+DROP TABLE IF EXISTS product_images;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS firms;
+DROP TABLE IF EXISTS audit_logs;
+DROP TABLE IF EXISTS admin_sessions;
+DROP TABLE IF EXISTS admins;
+DROP TABLE IF EXISTS user_addresses;
+DROP TABLE IF EXISTS users;

@@ -1,0 +1,252 @@
+.orders-container {
+  background: var(--tg-theme-bg-color, #f6f6f6);
+  color: var(--tg-theme-text-color, #222);
+  min-height: 100vh;
+  padding: 16px 0 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orders-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 92%;
+  max-width: 500px;
+  margin-bottom: 16px;
+}
+
+.orders-back {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--tg-theme-link-color, #a349a4);
+  padding: 4px 8px;
+}
+
+.orders-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  flex: 1;
+}
+
+.orders-hint {
+  color: var(--tg-theme-hint-color, #999);
+  text-align: center;
+}
+
+.orders-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--tg-theme-hint-color, #999);
+}
+
+.orders-shop-btn {
+  background: var(--tg-theme-button-color, #a349a4);
+  color: var(--tg-theme-button-text-color, #fff);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.orders-list {
+  width: 92%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-card {
+  background: var(--tg-theme-secondary-bg-color, #fff);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-card-id {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.order-card-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 8px;
+}
+
+.order-card-date {
+  font-size: 0.85rem;
+  color: var(--tg-theme-hint-color, #888);
+}
+
+.order-card-items {
+  font-size: 0.9rem;
+  color: var(--tg-theme-text-color, #222);
+}
+
+.order-card-qty {
+  color: var(--tg-theme-hint-color, #888);
+}
+
+.order-card-methods {
+  font-size: 0.85rem;
+  color: var(--tg-theme-text-color, #222);
+  opacity: 0.85;
+}
+
+.order-card-total {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.order-card-address {
+  font-size: 0.85rem;
+  color: var(--tg-theme-text-color, #222);
+  opacity: 0.75;
+  line-height: 1.35;
+}
+
+.order-detail-card {
+  width: 92%;
+  max-width: 500px;
+  background: var(--tg-theme-secondary-bg-color, #fff);
+  color: var(--tg-theme-text-color, #222);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--tg-theme-bg-color, #f5f5f5);
+}
+
+.order-detail-meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.order-detail-meta-label {
+  color: var(--tg-theme-hint-color, #888);
+}
+
+.order-detail-address {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--tg-theme-hint-color, #eee);
+}
+
+.order-detail-address h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+}
+
+.order-detail-address p {
+  margin: 0 0 4px 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--tg-theme-text-color, #222);
+}
+
+.order-detail-item-name {
+  flex: 1;
+  min-width: 0;
+  padding-right: 8px;
+}
+
+.order-detail-total {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--tg-theme-hint-color, #eee);
+}
+
+.order-detail-items {
+  margin-top: 12px;
+}
+
+.order-detail-items h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.order-detail-item-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--tg-theme-hint-color, #eee);
+}
+
+.order-detail-item-row:last-of-type {
+  border-bottom: none;
+}
+
+.order-history {
+  width: 92%;
+  max-width: 500px;
+  margin-top: 18px;
+}
+
+.order-history h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.order-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-history-item {
+  background: var(--tg-theme-secondary-bg-color, #fff);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-history-status {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.order-history-date {
+  font-size: 0.8rem;
+  color: var(--tg-theme-hint-color, #888);
+}
+
+.order-history-comment {
+  font-size: 0.85rem;
+  color: var(--tg-theme-hint-color, #666);
+  margin: 4px 0 0 0;
+}

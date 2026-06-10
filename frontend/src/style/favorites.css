@@ -1,0 +1,137 @@
+.favorites-container {
+  background: var(--tg-theme-bg-color, #f6f6f6);
+  color: var(--tg-theme-text-color, #222);
+  min-height: 100vh;
+  padding: 24px 0 80px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.favorites-empty {
+  margin-top: 48px;
+  font-size: 1.2rem;
+}
+
+.favorites-empty-text {
+  color: #6bb36b;
+}
+
+.favorites-header {
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 18px auto 12px auto;
+}
+
+.favorites-clear {
+  background: none;
+  border: none;
+  color: var(--tg-theme-hint-color, #888);
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 400;
+  padding: 0;
+}
+.favorites-clear:hover {
+  color: var(--tg-theme-link-color, #a349a4);
+}
+
+.favorites-list {
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.favorites-item {
+  display: flex;
+  background: var(--tg-theme-secondary-bg-color, #fff);
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  padding: 14px 12px;
+  align-items: center;
+}
+
+.favorites-item-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-right: 14px;
+}
+
+.favorites-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.favorites-item-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.favorites-item-price {
+  font-weight: bold;
+  color: var(--tg-theme-text-color, #222);
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+}
+
+.favorites-remove {
+  background: none;
+  border: none;
+  color: var(--tg-theme-link-color, #a349a4);
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.remove-favorite {
+  background: none;
+  border: none;
+  color: var(--tg-theme-hint-color, #888);
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 0;
+  align-self: flex-start;
+  transition: color 0.2s;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+.remove-favorite:hover {
+  color: var(--tg-theme-link-color, #a349a4);
+}
+
+.h-home {
+  font-size: 2rem;
+  font-weight: bold;
+  width: 90%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.continue-shopping {
+  background: none;
+  border: none;
+  color: var(--tg-theme-hint-color, #888);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 12px;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.continue-shopping:hover {
+  color: var(--tg-theme-link-color, #a349a4);
+}

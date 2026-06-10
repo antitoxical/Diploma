@@ -1,0 +1,120 @@
+services:
+  # ── PostgreSQL ────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: telegramshop
+    ports:
+      - "5439:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Backend (Go + Fiber) ──────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: telegramshop
+      POSTGRES_SSLMODE: disable
+      SERVER_PORT: 8080
+      BOT_TOKEN: ${BOT_TOKEN:-}
+      JWT_SECRET: ${JWT_SECRET:-super-secret-diploma-key-2026}
+      WEBAPP_URL: ${WEBAPP_URL:-}
+      ADMIN_TELEGRAM_CHAT_ID: ${ADMIN_TELEGRAM_CHAT_ID:-831409150}
+      ADMIN_PANEL_URL: ${ADMIN_PANEL_URL:-http://localhost:5173}
+      SUPPORT_CONTACT: ${SUPPORT_CONTACT:-}
+      UPLOAD_DIR: /app/uploads
+    ports:
+      - "8090:8080"
+    volumes:
+      - shop_uploads:/app/uploads
+
+  # ── Migrator (runs once) ─────────────────────────────────────────
+  migrator:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: telegramshop
+      POSTGRES_SSLMODE: disable
+    command: ["./migrator", "-up"]
+    restart: "no"
+
+  # ── Frontend (React) ──────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+  # ── Admin panel (Refine + Vite) ───────────────────────────────────
+  admin-panel:
+    image: node:20-alpine
+    working_dir: /app
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:8090/api/v1
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    volumes:
+      - ./admin-panel:/app
+    ports:
+      - "5173:5173"
+
+  # ── Nginx reverse proxy ──────────────────────────────────────────
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+      - frontend
+
+  # ── Prometheus ────────────────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    ports:
+      - "9190:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  prometheus_data:
+  shop_uploads:

@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--tg-theme-bg-color, #f6f6f6);
+  color: var(--tg-theme-text-color, #222);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--tg-theme-link-color, #a349a4);
+}
+
+input, textarea, select {
+  color: var(--tg-theme-text-color, #222);
+  background: var(--tg-theme-secondary-bg-color, #fff);
+  border: 1px solid var(--tg-theme-hint-color, #ddd);
+  -webkit-text-fill-color: var(--tg-theme-text-color, #222);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--tg-theme-hint-color, #999);
+  -webkit-text-fill-color: var(--tg-theme-hint-color, #999);
+}
+
+/* ── Centering on wide screens (PC Telegram) ── */
+#root {
+  max-width: 600px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--tg-theme-bg-color, #f6f6f6);
+  position: relative;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+@media (min-width: 601px) {
+  body {
+    background: color-mix(in srgb, var(--tg-theme-bg-color, #f6f6f6) 60%, #888);
+  }
+  #root {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.18);
+    border-left: 1px solid rgba(128, 128, 128, 0.2);
+    border-right: 1px solid rgba(128, 128, 128, 0.2);
+  }
+}

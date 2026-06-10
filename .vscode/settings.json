@@ -1,0 +1,16 @@
+{
+  "markdown.format.enable": false,
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "go.workspaces": ["go.work"],
+  "go.toolsEnvVars": {
+    "GOTOOLCHAIN": "auto"
+  },
+  "gopls": {
+    "build.directory": "backend",
+    "build.env": {
+      "GOTOOLCHAIN": "auto"
+    }
+  }
+}

@@ -1,0 +1,1994 @@
+basePath: /api/v1
+definitions:
+  telegramshop_backend_internal_models.AdminCreateInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.AdminLoginInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.Category:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      parent_id:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.CreateBasketItem:
+    properties:
+      product_id:
+        type: string
+      quantity:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  telegramshop_backend_internal_models.CreateFavorite:
+    properties:
+      product_id:
+        type: string
+      user_id:
+        description: telegram_id
+        type: integer
+    type: object
+  telegramshop_backend_internal_models.CreateNotification:
+    properties:
+      message:
+        type: string
+      title:
+        type: string
+      user_id:
+        description: telegram_id
+        type: integer
+    type: object
+  telegramshop_backend_internal_models.CreateOrder:
+    properties:
+      delivery_address:
+        type: string
+      items:
+        items:
+          properties:
+            product_id:
+              type: string
+            quantity:
+              type: integer
+          type: object
+        type: array
+      user_id:
+        description: telegram_id
+        type: integer
+    type: object
+  telegramshop_backend_internal_models.CreateUser:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      phone:
+        type: string
+      telegram_id:
+        type: integer
+      username:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.Firm:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.ImageInput:
+    properties:
+      image:
+        example: https://example.com/image.jpg
+        type: string
+    type: object
+  telegramshop_backend_internal_models.ImagesInput:
+    properties:
+      images:
+        items:
+          type: string
+        type: array
+    type: object
+  telegramshop_backend_internal_models.Product:
+    properties:
+      category_id:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      firm_id:
+        type: string
+      id:
+        type: string
+      image_gallery:
+        items:
+          type: integer
+        type: array
+      image_url:
+        type: string
+      is_active:
+        type: boolean
+      name:
+        type: string
+      price_kopeks:
+        type: integer
+      stock_quantity:
+        type: integer
+    type: object
+  telegramshop_backend_internal_models.ProductPriceTier:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      min_quantity:
+        type: integer
+      price_kopeks:
+        type: integer
+      product_id:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.StockInput:
+    properties:
+      stock:
+        type: integer
+    type: object
+  telegramshop_backend_internal_models.UpdateCategoryInput:
+    properties:
+      image_url:
+        type: string
+      name:
+        type: string
+      parent_id:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.UpdateFirmInput:
+    properties:
+      name:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.UpdateOrderStatus:
+    properties:
+      status:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.UpdatePriceTierInput:
+    properties:
+      min_quantity:
+        type: integer
+      price_kopeks:
+        type: integer
+    type: object
+  telegramshop_backend_internal_models.UpdateProductInput:
+    properties:
+      category_id:
+        type: string
+      description:
+        type: string
+      firm_id:
+        type: string
+      image_url:
+        type: string
+      is_active:
+        type: boolean
+      name:
+        type: string
+      price_kopeks:
+        type: integer
+      stock_quantity:
+        type: integer
+    type: object
+  telegramshop_backend_internal_models.UpdateTierMinQuantity:
+    properties:
+      new_min_quantity:
+        example: 5
+        type: integer
+    type: object
+  telegramshop_backend_internal_models.UpdateUserProfile:
+    properties:
+      delivery_address:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      phone:
+        type: string
+      username:
+        type: string
+    type: object
+  telegramshop_backend_internal_models.UpsertReviewInput:
+    properties:
+      comment:
+        type: string
+      product_id:
+        type: string
+      rating:
+        type: integer
+      user_id:
+        description: telegram_id
+        type: integer
+    type: object
+  telegramshop_backend_pkg_web.Response:
+    properties:
+      data: {}
+      status:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Backend API for Telegram Mini App online shop (AlphaSales)
+  title: AlphaSales Backend API
+  version: "1.0"
+paths:
+  /admin/admins:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new admin account (requires JWT)
+      parameters:
+      - description: Admin data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.AdminCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Create new admin
+      tags:
+      - admin
+  /admin/categories:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new category (admin)
+      parameters:
+      - description: Category data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Create category
+      tags:
+      - categories
+  /admin/categories/{id}:
+    delete:
+      description: Deletes a category (admin)
+      parameters:
+      - description: Category UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete category
+      tags:
+      - categories
+    put:
+      consumes:
+      - application/json
+      description: Updates category details (admin)
+      parameters:
+      - description: Category UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.UpdateCategoryInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Update category
+      tags:
+      - categories
+  /admin/categories/{id}/image:
+    delete:
+      description: Removes category image (admin)
+      parameters:
+      - description: Category UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Remove category image
+      tags:
+      - categories
+    put:
+      consumes:
+      - application/json
+      description: Sets or updates category image (admin)
+      parameters:
+      - description: Category UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Image URL
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.ImageInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Set category image
+      tags:
+      - categories
+  /admin/firms:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new firm/brand (admin)
+      parameters:
+      - description: Firm data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.Firm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Create firm
+      tags:
+      - firms
+  /admin/firms/{id}:
+    delete:
+      description: Deletes a firm (admin)
+      parameters:
+      - description: Firm UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete firm
+      tags:
+      - firms
+    put:
+      consumes:
+      - application/json
+      description: Updates firm details (admin)
+      parameters:
+      - description: Firm UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated firm data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.UpdateFirmInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Update firm
+      tags:
+      - firms
+  /admin/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates admin and returns JWT token
+      parameters:
+      - description: Login credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.AdminLoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Admin login
+      tags:
+      - admin
+  /admin/notifications:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new notification for a user (admin)
+      parameters:
+      - description: Notification data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.CreateNotification'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Create notification
+      tags:
+      - notifications
+  /admin/notifications/{id}:
+    delete:
+      description: Deletes a notification (admin)
+      parameters:
+      - description: Notification UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete notification
+      tags:
+      - notifications
+  /admin/orders/{id}/status:
+    patch:
+      consumes:
+      - application/json
+      description: Updates the status of an order (admin)
+      parameters:
+      - description: Order UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: New status
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.UpdateOrderStatus'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Update order status
+      tags:
+      - orders
+  /admin/orders/all:
+    get:
+      description: Returns all orders in the system (admin)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Get all orders
+      tags:
+      - orders
+  /admin/prices:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new volume-based price tier (admin)
+      parameters:
+      - description: Price tier data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.ProductPriceTier'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Create price tier
+      tags:
+      - prices
+  /admin/prices/{id}:
+    delete:
+      description: Deletes a price tier (admin)
+      parameters:
+      - description: Price tier UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete price tier
+      tags:
+      - prices
+    put:
+      consumes:
+      - application/json
+      description: Updates a price tier (admin)
+      parameters:
+      - description: Price tier UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated price data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.UpdatePriceTierInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Update price tier
+      tags:
+      - prices
+  /admin/prices/{id}/count:
+    patch:
+      consumes:
+      - application/json
+      description: Updates the minimum quantity threshold for a price tier (admin)
+      parameters:
+      - description: Price tier UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: New min quantity
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.UpdateTierMinQuantity'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Update price tier min quantity
+      tags:
+      - prices
+  /admin/prices/product/{product_id}:
+    delete:
+      description: Deletes all price tiers associated with a product (admin)
+      parameters:
+      - description: Product UUID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete all price tiers for a product
+      tags:
+      - prices
+  /admin/products:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new product (admin)
+      parameters:
+      - description: Product data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Create product
+      tags:
+      - products
+  /admin/products/{id}:
+    delete:
+      description: Deletes a product by UUID (admin)
+      parameters:
+      - description: Product UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete product
+      tags:
+      - products
+    put:
+      consumes:
+      - application/json
+      description: Updates product details (admin)
+      parameters:
+      - description: Product UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated product data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.UpdateProductInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Update product
+      tags:
+      - products
+  /admin/products/{id}/image:
+    delete:
+      consumes:
+      - application/json
+      description: Removes an image URL from a product (admin)
+      parameters:
+      - description: Product UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Image URL to remove
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.ImageInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Remove product image
+      tags:
+      - products
+    put:
+      consumes:
+      - application/json
+      description: Adds an image URL to a product (admin)
+      parameters:
+      - description: Product UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Image URL
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.ImageInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Add product image
+      tags:
+      - products
+  /admin/products/{id}/images:
+    put:
+      consumes:
+      - application/json
+      description: Replaces all product images (admin)
+      parameters:
+      - description: Product UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Image URLs array
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.ImagesInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Set product images
+      tags:
+      - products
+  /admin/products/{id}/stock:
+    patch:
+      consumes:
+      - application/json
+      description: Updates stock quantity for a product (admin)
+      parameters:
+      - description: Product UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Stock quantity
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.StockInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Update product stock
+      tags:
+      - products
+  /admin/users:
+    get:
+      description: Returns list of all registered users (admin)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      security:
+      - BearerAuth: []
+      summary: Get all users
+      tags:
+      - users
+  /basket:
+    post:
+      consumes:
+      - application/json
+      description: Adds a product to user's basket
+      parameters:
+      - description: Basket item
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.CreateBasketItem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Add item to basket
+      tags:
+      - basket
+    put:
+      consumes:
+      - application/json
+      description: Updates quantity of product in basket
+      parameters:
+      - description: Updated basket item
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.CreateBasketItem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Update basket item
+      tags:
+      - basket
+  /basket/{user_id}:
+    get:
+      description: Returns all items in user's basket
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get user's basket
+      tags:
+      - basket
+  /basket/{user_id}/{product_id}:
+    delete:
+      description: Removes a product from user's basket
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Product UUID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Remove item from basket
+      tags:
+      - basket
+  /categories:
+    get:
+      description: Returns list of all categories
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get all categories
+      tags:
+      - categories
+  /categories/{id}:
+    get:
+      description: Returns category details by UUID
+      parameters:
+      - description: Category UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get category by ID
+      tags:
+      - categories
+  /favorites:
+    post:
+      consumes:
+      - application/json
+      description: Adds a product to user's favorites
+      parameters:
+      - description: Favorite item
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.CreateFavorite'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Add to favorites
+      tags:
+      - favorites
+  /favorites/{user_id}:
+    get:
+      description: Returns all user's favorite products
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get user's favorites
+      tags:
+      - favorites
+  /favorites/{user_id}/{product_id}:
+    delete:
+      description: Removes a product from user's favorites
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Product UUID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Remove from favorites
+      tags:
+      - favorites
+  /firms:
+    get:
+      description: Returns list of all firms/brands
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get all firms
+      tags:
+      - firms
+  /firms/{id}:
+    get:
+      description: Returns firm details by UUID
+      parameters:
+      - description: Firm UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get firm by ID
+      tags:
+      - firms
+  /notifications/{id}/read:
+    patch:
+      description: Marks a single notification as read
+      parameters:
+      - description: Notification UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Mark notification as read
+      tags:
+      - notifications
+  /notifications/{user_id}:
+    get:
+      description: Returns all notifications for a user
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get user notifications
+      tags:
+      - notifications
+  /notifications/{user_id}/read-all:
+    patch:
+      description: Marks all notifications for a user as read
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Mark all notifications as read
+      tags:
+      - notifications
+  /orders:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new order for a user
+      parameters:
+      - description: Order data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.CreateOrder'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Create order
+      tags:
+      - orders
+  /orders/{id}:
+    get:
+      description: Returns order details with products
+      parameters:
+      - description: Order UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get order by ID
+      tags:
+      - orders
+  /orders/user/{user_id}:
+    get:
+      description: Returns all orders for a user
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get user's orders
+      tags:
+      - orders
+  /prices/{id}:
+    get:
+      description: Returns price tier details by UUID
+      parameters:
+      - description: Price tier UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get price tier by ID
+      tags:
+      - prices
+  /prices/product/{product_id}:
+    get:
+      description: Returns all price tiers for a product
+      parameters:
+      - description: Product UUID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get price tiers by product
+      tags:
+      - prices
+  /products:
+    get:
+      description: Returns list of all products
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get all products
+      tags:
+      - products
+  /products/{id}:
+    get:
+      description: Returns product details by UUID
+      parameters:
+      - description: Product UUID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get product by ID
+      tags:
+      - products
+  /products/search:
+    get:
+      description: Search and filter products with pagination
+      parameters:
+      - description: Search query
+        in: query
+        name: search
+        type: string
+      - description: Category UUID
+        in: query
+        name: category_id
+        type: string
+      - description: Firm UUID
+        in: query
+        name: firm_id
+        type: string
+      - description: Min price (kopeks)
+        in: query
+        name: min_price
+        type: integer
+      - description: Max price (kopeks)
+        in: query
+        name: max_price
+        type: integer
+      - description: Only in stock
+        in: query
+        name: in_stock
+        type: boolean
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Search products
+      tags:
+      - products
+  /reviews:
+    post:
+      consumes:
+      - application/json
+      description: Creates or updates a product review
+      parameters:
+      - description: Review data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.UpsertReviewInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Create or update review
+      tags:
+      - reviews
+  /reviews/product/{product_id}:
+    get:
+      description: Returns all reviews for a product
+      parameters:
+      - description: Product UUID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get product reviews
+      tags:
+      - reviews
+  /reviews/product/{product_id}/stats:
+    get:
+      description: Returns average rating and review count for a product
+      parameters:
+      - description: Product UUID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get product rating statistics
+      tags:
+      - reviews
+  /reviews/user/{user_id}/product/{product_id}:
+    delete:
+      description: Deletes a user's review for a product
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Product UUID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Delete review
+      tags:
+      - reviews
+    get:
+      description: Returns a specific user's review for a product
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Product UUID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get user's review for a product
+      tags:
+      - reviews
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: Registers a new user from Telegram
+      parameters:
+      - description: User data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.CreateUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Create new user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      description: Deletes a user by Telegram ID
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Delete user
+      tags:
+      - users
+    get:
+      description: Returns user details by Telegram ID
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Get user by Telegram ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Updates user profile (name, phone, address)
+      parameters:
+      - description: Telegram ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Profile data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/telegramshop_backend_internal_models.UpdateUserProfile'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/telegramshop_backend_pkg_web.Response'
+      summary: Update user profile
+      tags:
+      - users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
